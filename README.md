@@ -1,4 +1,4 @@
-# Tuya IoTOS Embeded Demo Bluetooth LE Segment LCD Driver
+# Tuya IoTOS Embedded Bluetooth LE Segment LCD Driver
 
 [English](./README.md) | [中文](./README_zh.md)
 
@@ -6,70 +6,71 @@
 
 ## Introduction
 
-This demo is based on [Tuya IoT Platform](https://iot.tuya.com/), Tuya Smart APP, IoTOS Embeded Ble SDK, using Tuya BLE series modules and a segment LCD (3-digit "8") quickly implement a segment LCD driver. The user can control the display status and display content of the segment LCD through the Tuya Smart APP. The demo provides  segment LCD driver related interfaces, which can quickly realize the settings of pins, display content (numbers, strings, characters, custom characters), light on and off status, flash mode (specified count, full screen flashing, specified digit flashing, etc), and callback function  for the end of flashing.
+In this demo, we will show you how to implement a 3-digit 7-segment LCD driver and make a segment LCD IoT-enabled. Based on the [Tuya IoT Platform](https://iot.tuya.com/), we use Tuya's Bluetooth LE module, SDK, and the Tuya Smart app to connect the LCD to the cloud so that you can feed contents to the LCD using a mobile app. This demo provides segment LCD interfaces to help you quickly implement pin configuration, display content (numerals, strings, characters, and custom characters), screen on/off, blinking effects (blinking period, full-screen blinking, and portion blinking), and the blinking callback.
 
 <br>
 
+## Get started
 
-## Quick start
+### Set up development environment
 
-### Development environment setup
+- Install the integrated development environment (IDE) as per your chip platform.
 
-- Install the integrated development environment (IDE) as per the requirements of the original chip SDK.
-- Find the download URL of the Tuya BLE SDK Demo Project from the following table. Refer to the `README.md` file under each branch to import the project.
+- Find the download URL of the Tuya Bluetooth LE SDK Demo Project from the following table. Refer to the `README.md` file under each branch to import the project.
 
-|   Platform   |  Model   |                       Download Address                       |
-| :----------: | :------: | :----------------------------------------------------------: |
-|    Nordic    | nrf52832 | [tuya_ble_sdk_Demo_Project_nrf52832.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_nrf52832.git) |
-|   Realtek    | RTL8762C | [tuya_ble_sdk_Demo_Project_rtl8762c.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_rtl8762c.git) |
-|    Telink    | TLSR825x | [tuya_ble_sdk_Demo_Project_tlsr8253.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_tlsr8253.git) |
-| Silicon Labs |   BG21   |                         Coming soon.                         |
-|    Beken     | BK3431Q  | [Tuya_ble_sdk_demo_project_bk3431q.git](https://github.com/TuyaInc/Tuya_ble_sdk_demo_project_bk3431q.git) |
-|    Beken     |  BK3432  | [ tuya_ble_sdk_Demo_Project_bk3432.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_bk3432.git) |
-|   Cypress    |  Psoc63  | [tuya_ble_sdk_Demo_Project_PSoC63.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_PSoC63.git) |
+   | Chip platform | Model | Download URL |
+   | :----------: | :------: | :----------------------------------------------------------: |
+   | Nordic | nrf52832 | [tuya_ble_sdk_Demo_Project_nrf52832.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_nrf52832.git) |
+   | Realtek | RTL8762C | [tuya_ble_sdk_Demo_Project_rtl8762c.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_rtl8762c.git) |
+   | Telink | TLSR825x | [tuya_ble_sdk_Demo_Project_tlsr8253.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_tlsr8253.git) |
+   | Silicon Labs | BG21 | Coming soon. |
+   | Beken | BK3431Q | [tuya_ble_sdk_demo_project_bk3431q.git](https://github.com/TuyaInc/Tuya_ble_sdk_demo_project_bk3431q.git) |
+   | Beken | BK3432 | [tuya_ble_sdk_Demo_Project_bk3432.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_bk3432.git) |
+   | Cypress | Psoc63 | [tuya_ble_sdk_Demo_Project_PSoC63.git](https://github.com/TuyaInc/tuya_ble_sdk_Demo_Project_PSoC63.git) |
 
 <br>
 
-### Compile and burn
+### Compile and flash
 
 - Edit code
 
-  1. In `tuya_ble_app_demo.h`, specify the PID of the product you have created on the [Tuya IoT Platform](https://iot.tuya.com/).
+   1. In `tuya_ble_app_demo.h`, specify the PID of the product you have created on the [Tuya IoT Platform](https://iot.tuya.com/).
 
-     ```
+      ```
       #define APP_PRODUCT_ID     "xxxxxxxx"
-     ```
+      ```
 
-     Change `xxxxxxxx` to the PID.
+      Change `xxxxxxxx` to the PID.
 
-  2. In `tuya_ble_app_demo.h`, specify the `authkey` and `UUID`.
 
-     ```
+   2. In `tuya_ble_app_demo.c`, specify the `authkey` and `UUID`.
+
+      ```
       static const char auth_key_test[] = "yyyyyyyy";
       static const char device_id_test[] = "zzzzzzzz";
-     ```
+      ```
 
-     Change `yyyyyyyy` to the `authkey` and `zzzzzzzz` to the `UUID`.
+      Change `yyyyyyyy` to your authkey and `zzzzzzzz` to your UUID.
 
 - Compile code
 
-  Compile the edited code, download the code to the hardware, and run it. You may need to download the stack and bootloader depending on your chip models. Check the logs and use the third-party Bluetooth debugging app (such as LightBlue for iOS) to verify the Bluetooth broadcast.
+   Compile the edited code, download the code to the hardware, and run it. You may need to download the stack and bootloader depending on your chip models. Check the logs and use the third-party Bluetooth debugging app (such as LightBlue for iOS) to verify the Bluetooth broadcast.
 
 <br>
 
-### File description
+### File introduction
 ```
 ├── src         /* Source code files */
 |    ├── sdk
-|    |    └── tuya_uart_common_handler.c        /* Code for UART communication */
+|    |    └── tuya_uart_common_handler.c        /* Code for UART communication  */
 |    ├── driver
 |    |    └── tuya_seg_lcd.c                    /* Segment LCD driver */
 |    ├── tuya_ble_app_demo.c                    /* Entry file of application layer */
-|    └── tuya_demo_seg_lcd_driver.c             /* Segment LCD driver application demo code */
+|    └── tuya_demo_seg_lcd_driver.c             /* Sample code */
 |
 └── include     /* Header files */
      ├── common
-     |    └── tuya_common.h                     /* Common types and marco define */
+     |    └── tuya_common.h                     /* Common types and macros */
      ├── sdk
      |    ├── custom_app_uart_common_handler.h  /* Code for UART communication */
      |    ├── custom_app_product_test.h         /* Implementation of custom production test items */
@@ -77,29 +78,28 @@ This demo is based on [Tuya IoT Platform](https://iot.tuya.com/), Tuya Smart APP
      ├── driver
      |    └── tuya_seg_lcd.h                    /* Segment LCD driver */
      ├── tuya_ble_app_demo.h                    /* Entry file of application layer */
-     └── tuya_demo_seg_lcd_driver.h             /* Segment LCD driver application demo code */
+     └── tuya_demo_seg_lcd_driver.h             /* Sample code */
 ```
 
 <br>
 
-### Application entry
+### Entry to application
+Entry file: `/tuya_ble_app/tuya_ble_app_demo.c`
 
-Entry file: /tuya_ble_app/tuya_ble_app_demo.c
-
-- `void tuya_ble_app_init(void)` is executed to initialize Tuya IoTOS Embedded Bluetooth LE SDK. This function is executed only once.
-- `void app_exe()` is used to execute the application code. It is executed in a loop.
++ `void tuya_ble_app_init(void)` is executed to initialize Tuya IoTOS Embedded Bluetooth LE SDK. This function is executed only once.
++ `void app_exe()` is used to execute the application code. It is executed in a loop.
 
 <br>
 
 ### Data point (DP)
 
-|   Function name    | tuya_ble_dp_data_report                                      |
-| :----------------: | :----------------------------------------------------------- |
+| Function | tuya_ble_dp_data_report |
+| :------: | :----------------------------------------------------------- |
 | Function prototype | tuya_ble_status_t tuya_ble_dp_data_report(uint8_t *p_data,uint32_t len); |
-|  Feature overview  | Reports DP data.                                             |
-|     Parameter      | `p_data [in]`: DP data. `len[in]`: data length. It cannot exceed `TUYA_BLE_REPORT_MAX_DP_DATA_LEN`. |
-|    Return value    | `TUYA_BLE_SUCCESS`: sent successfully. <br/>`TUYA_BLE_ERR_INVALID_PARAM`: invalid parameter. <br/>`TUYA_BLE_ERR_INVALID_STATE`: failed to send data due to the current Bluetooth connection, such as Bluetooth disconnected. <br/>`TUYA_BLE_ERR_NO_MEM`: failed to request memory resources. <br/>`TUYA_BLE_ERR_INVALID_LENGTH`: data length error. <br/>`TUYA_BLE_ERR_NO_EVENT`: other errors. |
-|      Remarks       | `application` calls this function to send DP data to the mobile app. |
+| Feature overview | Reports DP data. |
+| Parameters | `p_data [in]`: DP data. <br> `len[in]`: data length. It cannot exceed `TUYA_BLE_REPORT_MAX_DP_DATA_LEN`. |
+| Return value | `TUYA_BLE_SUCCESS`: sent successfully. <br/>`TUYA_BLE_ERR_INVALID_PARAM`: invalid parameter. <br/>`TUYA_BLE_ERR_INVALID_STATE`: failed to send data due to the current Bluetooth connection, such as Bluetooth disconnected. <br/>`TUYA_BLE_ERR_NO_MEM`: failed to request memory allocation. <br/>`TUYA_BLE_ERR_INVALID_LENGTH`: data length error. <br/>`TUYA_BLE_ERR_NO_EVENT`: other errors. |
+| Notes | `application` calls this function to send DP data to the mobile app. |
 
 Parameter description:
 
@@ -107,38 +107,48 @@ The [Tuya IoT Platform](https://iot.tuya.com/) manages data through DPs. The dat
 
 - `Dp_id`: the DP ID of a data point defined on the Tuya IoT platform. It is one byte.
 
+
 - `Dp_type`: the data type. It is one byte.
-  - `#define DT_RAW 0`: raw type.
-  - `#define DT_BOOL 1`: Boolean type.
-  - `#define DT_VALUE 2`: value type. The value range is specified when a DP of value type is created on the Tuya IoT Platform.
-  - `#define DT_STRING 3`: string type.
-  - `#define DT_ENUM 4`: enum type.
-  - `#define DT_BITMAP 5`: bitmap type.
+
+   ​ `#define DT_RAW 0`       raw type.
+
+   ​ `#define DT_BOOL 1`     Boolean type.
+
+   ​ `#define DT_VALUE 2`   value type. The value range is specified when a DP of value type is created on the Tuya IoT Platform.
+
+   ​ `#define DT_STRING 3`   string type.
+
+   ​ `#define DT_ENUM 4 `     enum type.
+
+   ​ `#define DT_BITMAP 5`  bitmap type.
+
 - `Dp_len`: It can be one byte or two bytes. Currently, Bluetooth only supports one byte, so the data of a single DP can be up to 255 bytes.
+
 
 - `Dp_data`: the DP data, with `dp_len` byte(s).
 
+
 The data that the parameter `p_data` points to must be packaged in the following format for reporting.
 
-| DP 1 data |         |        |         |  –   | DP n data |         |        |         |
-| :-------: | :-----: | :----: | :-----: | :--: | :-------: | :-----: | :----: | :-----: |
-|     1     |    2    |   3    |    4    |  –   |     n     |   n+1   |  n+2   |   n+3   |
-|   Dp_id   | Dp_type | Dp_len | Dp_data |  –   |   Dp_id   | Dp_type | Dp_len | Dp_data |
+| DP 1 data |         |        |         | — | DP n data |         |        |         |
+| :---------: | :-----: | :----: | :-----: | :--- | :---------: | :-----: | :----: | :-----: |
+| 1 | 2 | 3 | 4 | — | n | n+1 | n+2 | n+3 |
+| Dp_id | Dp_type | Dp_len | Dp_data | — | Dp_id | Dp_type | Dp_len | Dp_data |
 
-When this function is called, the maximum data length of is `TUYA_BLE_REPORT_MAX_DP_DATA_LEN`, which is 255+3 currently.
+When this function is called, the maximum data length is `TUYA_BLE_REPORT_MAX_DP_DATA_LEN`, which is `255+3` currently.
 
 <br>
 
 ### Pin configuration
 
-| Peripheral | I/O  | Peripheral | I/O  |
-| ------------------ | ---- | ------------------ | ---- |
-| Segment LCD - COM1 | PA1  | Segment LCD - SEG1 | PA0  |
-| Segment LCD - COM2 | PC2  | Segment LCD - SEG2 | PC0  |
-| Segment LCD - COM3 | PC3  | Segment LCD - SEG3 | PD3  |
-| Segment LCD - COM4 | PB4  | Segment LCD - SEG4 | PC1  |
-|                    |      | Segment LCD - SEG5 | PC4  |
-|                    |      | Segment LCD - SEG6 | PB5  |
+| Peripherals | I/O | Peripherals | I/O |
+| ----------------- | ---- | ----------------- | ---- |
+| Segment LCD-COM1 | PA1 | Segment LCD-SEG1 | PA0 |
+| Segment LCD-COM2 | PC2 | Segment LCD-SEG2 | PC0 |
+| Segment LCD-COM3 | PC3 | Segment LCD-SEG3 | PD3 |
+| Segment LCD-COM4 | PB4 | Segment LCD-SEG4 | PC1 |
+|                   |      | Segment LCD-SEG5 | PC4 |
+|                   |      | Segment LCD-SEG6 | PB5 |
 
 <br>
 
@@ -150,11 +160,12 @@ When this function is called, the maximum data length of is `TUYA_BLE_REPORT_MAX
 
 <br>
 
-## Technical Support
+
+## Technical support
 
 You can get support from Tuya with the following methods:
 
-+ [Tuya AI+IoT Developer Platform](https://developer.tuya.com/en/)
++ [Tuya Developer Platform](https://developer.tuya.com/en/)
 + [Help Center](https://support.tuya.com/en/help)
 + [Service & Support](https://service.console.tuya.com)
 
