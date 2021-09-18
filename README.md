@@ -6,7 +6,7 @@
 
 ## Introduction
 
-In this demo, we will show you how to implement a 3-digit 7-segment LCD driver and make a segment LCD IoT-enabled. Based on the [Tuya IoT Platform](https://iot.tuya.com/), we use Tuya's Bluetooth LE module, SDK, and the Tuya Smart app to connect the LCD to the cloud so that you can feed contents to the LCD using a mobile app. This demo provides segment LCD interfaces to help you quickly implement pin configuration, display content (numerals, strings, characters, and custom characters), screen on/off, blinking effects (blinking period, full-screen blinking, and portion blinking), and the blinking callback.
+In this demo, we will show you how to implement a 3-digit 7-segment LCD driver and make a segment LCD IoT-enabled. Based on the [Tuya IoT Platform](https://iot.tuya.com/), we use Tuya's Bluetooth LE module, SDK, and the Tuya Smart app to connect the LCD to the cloud so that you can feed contents to the LCD using a mobile app. This demo provides segment LCD interfaces to help you quickly implement pin configuration, display content (numerals, strings, characters, and custom characters), screen on/off, blinking effects (blinking times, full-screen blinking, and portion blinking), and the blinking callback.
 
 <br>
 
