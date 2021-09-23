@@ -64,6 +64,9 @@
 |    |    └── tuya_uart_common_handler.c        /* UART通用对接实现代码 */
 |    ├── driver
 |    |    └── tuya_seg_lcd.c                    /* 段码液晶屏驱动 */
+|    ├── platform
+|    |    ├── tuya_gpio.c                       /* GPIO驱动 */
+|    |    └── tuya_timer.c                      /* Timer驱动 */
 |    ├── tuya_ble_app_demo.c                    /* 应用层入口文件 */
 |    └── tuya_demo_seg_lcd_driver.c             /* 段码液晶屏驱动使用示例代码 */
 |
@@ -76,6 +79,9 @@
      |    └── custom_tuya_ble_config.h          /* 应用配置文件 */
      ├── driver
      |    └── tuya_seg_lcd.h                    /* 段码液晶屏驱动 */
+     ├── platform
+     |    ├── tuya_gpio.h                       /* GPIO驱动 */
+     |    └── tuya_timer.h                      /* Timer驱动 */
      ├── tuya_ble_app_demo.h                    /* 应用层入口文件 */
      └── tuya_demo_seg_lcd_driver.h             /* 段码液晶屏驱动使用示例代码 */
 ```
