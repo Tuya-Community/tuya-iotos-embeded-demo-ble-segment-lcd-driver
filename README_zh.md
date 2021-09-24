@@ -1,4 +1,4 @@
-# Tuya IoTOS Embeded Demo Bluetooth LE Segment LCD Driver
+# Tuya IoTOS Embedded Bluetooth LE Segment LCD Driver
 
 [English](./README.md) | [中文](./README_zh.md)
 
@@ -6,7 +6,7 @@
 
 ## 简介
 
-本 demo 基于 [涂鸦IoT平台](https://iot.tuya.com/) 、涂鸦智能APP、IoTOS Embeded BLE SDK，使用涂鸦BLE系列模组和1个段码液晶屏（3位“8”）快速实现一个段码液晶屏驱动程序。使用者可以通过涂鸦智能APP控制段码液晶屏的显示状态和显示内容。该demo提供了段码液晶屏驱动相关接口，可快速实现引脚、显示内容（数字、字符串、字符、自定义字符）、亮灭状态、闪烁方式（指定次数、全屏闪烁、指定位闪烁等）以及闪烁结束回调函数的设置。
+本 demo 基于 [涂鸦IoT平台](https://iot.tuya.com/) 、涂鸦智能APP、IoTOS Embedded Bluetooth LE SDK，使用涂鸦BLE系列模组和1个段码液晶屏（3位“8”）快速实现一个段码液晶屏驱动程序。使用者可以通过涂鸦智能APP控制段码液晶屏的显示状态和显示内容。该demo提供了段码液晶屏驱动相关接口，可快速实现引脚、显示内容（数字、字符串、字符、自定义字符）、亮灭状态、闪烁方式（指定次数、全屏闪烁、指定位闪烁等）以及闪烁结束回调函数的设置。
 
 <br>
 
@@ -16,7 +16,7 @@
 
 - IDE 根据芯片原厂 SDK 要求进行安装。
 
-- Tuya BLE SDK Demo Project 下载地址见下表所示。请参考各分支下的 `README.md` 文件完成工程导入。
+- Tuya Bluetooth LE SDK Demo Project 下载地址见下表所示。请参考各分支下的 `README.md` 文件完成工程导入。
 
   |   芯片平台   |   型号   |                           下载地址                           |
   | :----------: | :------: | :----------------------------------------------------------: |
@@ -91,7 +91,7 @@
 ### 应用入口
 入口文件：/tuya_ble_app/tuya_ble_app_demo.c
 
-+ `void tuya_ble_app_init(void)` 对Tuya IoTOS Embeded Ble SDK 进行一些必要的初始化，该函数只执行一次。
++ `void tuya_ble_app_init(void)` 对Tuya IoTOS Embedded Bluetooth LE SDK 进行一些必要的初始化，该函数只执行一次。
 + `void app_exe()` 该函数用来执行用户应用代码，该函数循环执行。
 
 <br>
